@@ -6,7 +6,7 @@ export default function Home({products, addCart}) {
   return (
     <main>
       <Header />
-      <h1>Home</h1>
+      <h1>Products</h1>
       <Products products={products}  addCart={addCart} />
     </main>
   )

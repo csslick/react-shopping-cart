@@ -12,7 +12,8 @@ function App() {
   const [carts, setCarts] = useState([]);
 
   useEffect(() => {
-    setProducts(data.products)    
+    setProducts(data.products)  
+    console.log('app data = ', data);  
   }, []);
 
   function addCart(selectedId) {
