@@ -11,3 +11,11 @@ ul {
 a {
   text-decoration: none;
 }
+
+button {
+  padding: 2px 5px;
+}
+
+main {
+  padding: 20px;
+}

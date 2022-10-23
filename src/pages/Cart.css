@@ -1,0 +1,21 @@
+.item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.left-info {
+  display: flex;
+  justify-content: space-between;
+  /* outline: 1px solid #333; */
+}
+
+.left-info h4 {
+  margin-right: 2em;
+  width: 100px;
+}
+
+.cart-box {
+  max-width: 500px;
+  margin: 20px auto;
+}

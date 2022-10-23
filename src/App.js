@@ -10,11 +10,35 @@ function App() {
 
   const [products, setProducts] = useState([]);
   const [carts, setCarts] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);  // 카트상품총액
 
   useEffect(() => {
     setProducts(data.products)  
-    console.log('app data = ', data);  
   }, []);
+
+  // cart update
+  useEffect(() => {
+    handleTotalPrice();
+  },[carts]);
+
+  function handleTotalPrice() {
+    console.log('handleTotalPrice')
+    // 카트에 상품이 있으면
+    if(carts.length > 0) {
+      const prices = carts.map(item => {
+        return {price:  item.price * item.quantity}
+      })
+      // let _totalPrice = prices.reduce((acc, cur) => acc.price + cur.price)
+      let allPrice  = 0;
+      for (let i in prices) {
+        allPrice += prices[i].price 
+      }
+      setTotalPrice(allPrice);
+      console.log('prices = ', prices)
+      // console.log('_totalPrice = ', _totalPrice)
+      console.log('allPrice = ', allPrice);
+    }
+  }
 
   function addCart(selectedId) {
     console.log(selectedId)
@@ -32,6 +56,7 @@ function App() {
           {...productExist, quantity: productExist.quantity + 1 } : item
         )
       })
+      console.log('addItem = ', addItem);
       setCarts(addItem);  // 카트에 [] 추가
     } else {
       // 카트에 선택한 상품이 없을 경우 상품 추가(quantity 속성 추가)
@@ -42,15 +67,51 @@ function App() {
     console.log('add carts = ', carts)
   }
 
+  // 장바구니 상품 수량+
+  function addItem(selectedId) {
+    console.log('addItem = ', selectedId)
+    addCart(selectedId)
+  }
+
+  // 장바구니 상품 수량-
+  function delItem(selectedId) {
+    const item = carts.find(item => item.id === selectedId)
+    console.log('item =', item)
+
+    if(item.quantity > 1) {
+      let updateCarts = carts.map(item => {
+        return item.id == selectedId ?
+          {...item, quantity: item.quantity - 1} : item
+      })
+      setCarts(updateCarts);
+    } else {
+      let updateCarts = carts.filter(item => {
+        return item.id !== selectedId 
+      })
+      console.log('updateCarts = ', updateCarts);
+      setCarts(updateCarts)
+    }
+
+  }
+
   return (
     <BrowserRouter>
       <Routes>
         <Route 
           path="/" 
-          element={ <Home products={products} addCart={addCart} />} 
+          element={ <Home products={products} addCart={addCart} totalPrice={totalPrice} />} 
         />
         <Route path="/login" element={ <Login />} />
-        <Route path="/cart" element={ <Cart carts={carts} />} />
+        <Route 
+          path="/cart" 
+          element={ 
+            <Cart 
+              carts={carts} 
+              addItem={addItem} 
+              delItem={delItem }
+              totalPrice={totalPrice}
+            />} 
+          />
       </Routes>
     </BrowserRouter>
   );
