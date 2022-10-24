@@ -19,3 +19,7 @@ button {
 main {
   padding: 20px;
 }
+
+.container {
+  padding: 10px 20px;
+}

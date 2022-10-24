@@ -19,3 +19,11 @@
   max-width: 500px;
   margin: 20px auto;
 }
+
+.total-price {
+  margin-top: 40px;
+  border-top: 1px solid #000;
+  padding-top: 1em;
+  font-size: 1.2rem;
+  font-weight: bold;
+}

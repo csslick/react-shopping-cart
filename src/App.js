@@ -21,8 +21,15 @@ function App() {
     handleTotalPrice();
   },[carts]);
 
+  // 장바구니 상품 삭제
+  function clearItem(selectedId) {
+    const updateCart = carts.filter(item => {
+      return item.id !== selectedId
+    })
+    setCarts(updateCart);
+  }
+
   function handleTotalPrice() {
-    console.log('handleTotalPrice')
     // 카트에 상품이 있으면
     if(carts.length > 0) {
       const prices = carts.map(item => {
@@ -34,9 +41,8 @@ function App() {
         allPrice += prices[i].price 
       }
       setTotalPrice(allPrice);
-      console.log('prices = ', prices)
-      // console.log('_totalPrice = ', _totalPrice)
-      console.log('allPrice = ', allPrice);
+    } else {
+      setTotalPrice(0);
     }
   }
 
@@ -99,7 +105,7 @@ function App() {
       <Routes>
         <Route 
           path="/" 
-          element={ <Home products={products} addCart={addCart} totalPrice={totalPrice} />} 
+          element={ <Home products={products} addCart={addCart} />} 
         />
         <Route path="/login" element={ <Login />} />
         <Route 
@@ -110,6 +116,7 @@ function App() {
               addItem={addItem} 
               delItem={delItem }
               totalPrice={totalPrice}
+              clearItem={clearItem}
             />} 
           />
       </Routes>
